@@ -35,7 +35,7 @@ manager.port_forwarding.add(new_rule)
 ### Doing raw RPC calls ###
 To issue raw RPC calls, use the `rpc` attribute of the manager. Its attributes can be used as exported JSONRPC libraries and their member attributes can be used as exported methods.
 
-The exported RPC libraries and their functions are documented [here](http://luci.subsignal.org/trac/wiki/Documentation/JsonRpcHowTo) (don't mind the part about authentication though, as the proxy object does that on-the-fly for you.
+The exported RPC libraries and their functions are documented [here](http://luci.subsignal.org/trac/wiki/Documentation/JsonRpcHowTo); don't mind the part about authentication though, as the proxy object does that on-the-fly for you.
 
 ```python
 for path in manager.rpc.fs.dir('/etc'):
