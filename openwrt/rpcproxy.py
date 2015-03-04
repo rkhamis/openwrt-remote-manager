@@ -2,7 +2,17 @@ from urllib2 import HTTPError
 from pyjsonrpc import HttpClient
 
 
-class _Client:
+class _Proxy:
+    """
+    An RPC proxy to an OpenWRT's Luci-exported JSONRPC interface.
+
+    Call methods on this object qualified by their library name as if they are members of this object, for example;
+    >>> proxy.fs.dir('/etc')
+    would call the method `dir('/etc')` exported by the `fs` library.
+
+    See http://luci.subsignal.org/trac/wiki/Documentation/JsonRpcHowTo for more documentation on the exported librabries
+    and methods.
+    """
 
     def __init__(self, openwrt_hostname, username, password):
         self._openwrt_hostname = openwrt_hostname
@@ -18,7 +28,7 @@ class _Client:
 
     def authenticate(self):
         """
-        Authenticates this client and mutates its internal state according to the authentication result.
+        Authenticates this proxy and mutates its internal state according to the authentication result.
         """
         if not self._auth_token:
             self._auth_token = HttpClient(url=self.http_url('auth')).login(self._auth_username, self._auth_password)
@@ -77,28 +87,5 @@ class _Method:
                 raise AuthenticationError(self._library.client.hostname)
 
 
-def connect(openwrt_hostname, username, password):
-    """
-    A client to OpenWRT's Luci-exported JSONRPC interface.
-
-    For more information about the JSONRPC interface, see:
-    http://luci.subsignal.org/trac/wiki/Documentation/JsonRpcHowTo
-
-    Args:
-        openwrt_hostname: the hostname to the OpenWRT instance
-        username: the configured Luci username
-        password: the configured luci password
-
-    Raises:
-        AuthenticationError: any call to an exported method can raise this when authentication fails
-
-    Usage:
-        Resulting connection objects act as a direct proxy and can be used directly to call exported
-        methods on all the available libraries.
-
-        >>> import openwrt
-        >>> client = openwrt.connect(openwrt_hostname='10.0.0.5', username='root', 'password'=root)
-        >>> for path in client.fs.dir():
-        >>>     print(path)
-    """
-    return _Client(openwrt_hostname, username, password)
+def create(openwrt_hostname, username, password):
+    return _Proxy(openwrt_hostname, username, password)
