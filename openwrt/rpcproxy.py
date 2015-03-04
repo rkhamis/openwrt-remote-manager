@@ -14,14 +14,14 @@ class _Proxy:
     and methods.
     """
 
-    def __init__(self, openwrt_hostname, username, password):
-        self._openwrt_hostname = openwrt_hostname
+    def __init__(self, hostname, username, password):
+        self._hostname = hostname
         self._auth_username = username
         self._auth_password = password
         self._auth_token = None
 
     def http_url(self, library):
-        url = "http://{}/cgi-bin/luci/rpc/{}".format(self._openwrt_hostname, library)
+        url = "http://{}/cgi-bin/luci/rpc/{}".format(self._hostname, library)
         if self._auth_token:
             url += "?auth=" + self._auth_token
         return url
@@ -38,7 +38,7 @@ class _Proxy:
 
     @property
     def hostname(self):
-        return self._openwrt_hostname
+        return self._hostname
 
 
 class AuthenticationError:
@@ -51,6 +51,9 @@ class AuthenticationError:
 
 
 class _Library:
+    """
+    A Luci library available on JSONRPC.
+    """
 
     def __init__(self, client, library_name):
         self._client = client
@@ -73,6 +76,9 @@ class _Library:
 
 
 class _Method:
+    """
+    A JSONRPC method.
+    """
 
     def __init__(self, library, method_name):
         self._library = library
@@ -87,5 +93,5 @@ class _Method:
                 raise AuthenticationError(self._library.client.hostname)
 
 
-def create(openwrt_hostname, username, password):
-    return _Proxy(openwrt_hostname, username, password)
+def create(hostname, username, password):
+    return _Proxy(hostname, username, password)
