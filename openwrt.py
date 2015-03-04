@@ -93,7 +93,7 @@ def connect(openwrt_hostname, username, password):
         AuthenticationError: any call to an exported method can raise this when authentication fails
 
     Usage:
-        Instantiated objects of this class act as a direct proxy and can be used directly to call exported
+        Resulting connection objects act as a direct proxy and can be used directly to call exported
         methods on all the available libraries.
 
         >>> import openwrt
