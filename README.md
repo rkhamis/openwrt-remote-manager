@@ -26,11 +26,6 @@ updated_rule = rule.updated(dest_port=9080)
 manager.port_forwarding.update(updated_rule)
 
 # Create a new rule
-        option src       wan
-        option src_dport 80
-        option proto     tcp
-        option dest      lan
-        option dest_ip   192.168.1.10
 from openwrt import PortForwardingRule
 new_rule = PortForwardingRule.create(name='My awesome forwarded port',
     src='wan', src_dport=80, proto='tcp', dest='lan', dest_ip='192.168.1.10')
