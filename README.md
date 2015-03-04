@@ -7,7 +7,7 @@ http://luci.subsignal.org/trac/wiki/Documentation/JsonRpcHowTo
 
 ## Usage ##
 
-Instantiated objects of this class act as a direct proxy and can be used directly to call exported
+Connection objects act as a direct proxy and can be used directly to call exported
 methods on all the available libraries.
 
 ```python
