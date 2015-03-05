@@ -32,12 +32,10 @@ new_rule = PortForwardingRule.create(name='My awesome forwarded port',
 manager.port_forwarding.add(new_rule)
 ```
 
-To issue raw JSONRPC calls, use the `rpc` attribute of the manager. Its attributes can be used as exported
-JSONRPC libraries and their member attributes can be used as exported methods.
+### Doing raw RPC calls ###
+To issue raw RPC calls, use the `rpc` attribute of the manager. Its attributes can be used as exported JSONRPC libraries and their member attributes can be used as exported methods.
 
-The exported JSONRPC libraries and their functions are documented here (don't mind the part about authentication though,
-as the proxy object does that on-the-fly for you):
-http://luci.subsignal.org/trac/wiki/Documentation/JsonRpcHowTo
+The exported RPC libraries and their functions are documented [here](http://luci.subsignal.org/trac/wiki/Documentation/JsonRpcHowTo); don't mind the part about authentication though, as the proxy object does that on-the-fly for you.
 
 ```python
 for path in manager.rpc.fs.dir('/etc'):
