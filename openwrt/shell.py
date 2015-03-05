@@ -1,5 +1,5 @@
 
-class _ShellManager:
+class ShellManager:
 
     def __init__(self, rpc):
         self._rpc = rpc

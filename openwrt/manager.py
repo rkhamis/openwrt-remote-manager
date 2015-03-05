@@ -11,7 +11,7 @@ class Manager:
 
     def __init__(self, hostname, username, password):
         self._rpc = rpcproxy.create(hostname, username, password)
-        self._shell = shell._ShellManager(self._rpc)
+        self._shell = shell.ShellManager(self._rpc)
         self._services = services.ServicesManager(self._shell)
         self._portforwarding_manager = portforwarding.PortForwardingManager(self._rpc, self._services)
 

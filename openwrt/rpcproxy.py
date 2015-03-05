@@ -2,7 +2,7 @@ from urllib2 import HTTPError
 from pyjsonrpc import HttpClient
 
 
-class _Proxy:
+class Proxy:
     """
     An RPC proxy to an OpenWRT's Luci-exported JSONRPC interface.
 
@@ -96,4 +96,4 @@ class _Method:
 
 
 def create(hostname, username, password):
-    return _Proxy(hostname, username, password)
+    return Proxy(hostname, username, password)
