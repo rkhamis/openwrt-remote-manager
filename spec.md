@@ -24,6 +24,7 @@ It should provide the capability to
 * retrieve the network information associated with all the available network interfaces
 * retrieve the network information associated with a specific available network interface
 * set the network information for a specific network interface
+* ping an external network location from within the OpenWRT instance
 
 #### Configuration backup ####
 It should provide the capability to
