@@ -56,8 +56,9 @@ class PortForwardingRule(collections.namedtuple('PortForwardingRule',
 
 class PortForwardingManager:
 
-    def __init__(self, rpc_proxy):
+    def __init__(self, rpc_proxy, service_manager):
         self._rpc = rpc_proxy
+        self._services = service_manager
 
     @property
     def all(self):
@@ -123,5 +124,4 @@ class PortForwardingManager:
 
     def _commit_config_and_restart_firewall_service(self):
         self._rpc.uci.commit('firewall')
-        # TODO: Restart firewall service
-        pass
+        self._services.restart('firewall')

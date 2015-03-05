@@ -1,3 +1,4 @@
+from openwrt import shell, services
 import rpcproxy
 import portforwarding
 
@@ -10,6 +11,9 @@ class Manager:
 
     def __init__(self, hostname, username, password):
         self._rpc = rpcproxy.create(hostname, username, password)
+        self._shell = shell._ShellManager(self._rpc)
+        self._services = services.ServicesManager(self._shell)
+        self._portforwarding_manager = portforwarding.PortForwardingManager(self._rpc, self._services)
 
     @property
     def rpc(self):
@@ -32,4 +36,12 @@ class Manager:
 
     @property
     def port_forwarding(self):
-        return portforwarding.PortForwardingManager(self._rpc)
+        return self._portforwarding_manager
+
+    @property
+    def shell(self):
+        return self._shell
+
+    @property
+    def services(self):
+        return self._services
