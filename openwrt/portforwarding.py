@@ -77,9 +77,11 @@ class PortForwardingManager:
         if isinstance(rule, PortForwardingRule):
             return self.delete(rule.meta_name)
         elif isinstance(rule, int):
-            return self._rpc.uci.delete('firewall', '@redirect[{}]'.format(rule))
+            self._rpc.uci.delete('firewall', '@redirect[{}]'.format(rule))
+            self._commit_config_and_restart_firewall_service()
         elif isinstance(rule, (str, unicode)):
-            return self._rpc.uci.delete('firewall', rule)
+            self._rpc.uci.delete('firewall', rule)
+            self._commit_config_and_restart_firewall_service()
         else:
             raise ValueError('Invalid argument')
 
@@ -93,7 +95,13 @@ class PortForwardingManager:
         """
         assert rule.meta_name, 'The rule must have an associated meta_name'
         for field_name in rule.non_meta_field_names:
-            self._rpc.uci.set('firewall', rule.meta_name, field_name, getattr(rule, field_name))
+            value = getattr(rule, field_name)
+            if value:
+                assert(self._rpc.uci.set('firewall', rule.meta_name, field_name, value))
+            elif self._rpc.uci.get('firewall', rule.meta_name, field_name):
+                assert(self._rpc.uci.delete('firewall', rule.meta_name, field_name))
+
+        self._commit_config_and_restart_firewall_service()
 
     def add(self, new_rule):
         """
@@ -110,4 +118,10 @@ class PortForwardingManager:
             if getattr(new_rule, field_name, None):
                 self._rpc.uci.set('firewall', new_key, field_name, getattr(new_rule, field_name))
 
+        self._commit_config_and_restart_firewall_service()
         return PortForwardingRule.from_dict(self._rpc.uci.get_all('firewall', new_key))
+
+    def _commit_config_and_restart_firewall_service(self):
+        self._rpc.uci.commit('firewall')
+        # TODO: Restart firewall service
+        pass
