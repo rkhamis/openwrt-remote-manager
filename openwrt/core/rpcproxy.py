@@ -34,7 +34,7 @@ class Proxy:
             self._auth_token = HttpClient(url=self.http_url('auth')).login(self._auth_username, self._auth_password)
 
     def __getattr__(self, library_name):
-        return _Library(self, library_name)
+        return _LibraryOrMethod(self, library_name)
 
     @property
     def hostname(self):
@@ -50,46 +50,24 @@ class AuthenticationError:
         return "Failed to authenticate with OpenWRT at {}".format(self._hostname)
 
 
-class _Library:
-    """
-    A Luci library available on JSONRPC.
-    """
+class _LibraryOrMethod:
 
-    def __init__(self, client, library_name):
-        self._client = client
-        self._name = library_name
+    def __init__(self, proxy, name):
+        self._proxy = proxy
+        self._name = name
 
-    @property
-    def name(self):
-        return self._name
-
-    @property
-    def client(self):
-        return self._client
-
-    @property
-    def http_url(self):
-        return self._client.http_url(self._name)
-
-    def __getattr__(self, method_name):
-        return _Method(self, method_name)
-
-
-class _Method:
-    """
-    A JSONRPC method.
-    """
-
-    def __init__(self, library, method_name):
-        self._library = library
-        self._name = method_name
+    def __getattr__(self, suffix_name):
+        return _LibraryOrMethod(self._proxy, '{}.{}'.format(self._name, suffix_name))
 
     def __call__(self, *args, **kwargs):
-        self._library.client.authenticate()
+        self._proxy.authenticate()
+        name_components = self._name.split('.')
+        library, method = name_components[0], '.'.join(name_components[1:])
         try:
-            return HttpClient(url=self._library.http_url).call(self._name, *args, **kwargs)
+            return HttpClient(url=self._proxy.http_url(library)).call(method, *args, **kwargs)
         except HTTPError as e:
             if e.code == 403:
-                raise AuthenticationError(self._library.client.hostname)
+                raise AuthenticationError(self.client.hostname)
             else:
                 raise
+
