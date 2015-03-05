@@ -30,7 +30,8 @@ It should provide the capability to
 * archive and compress the configuration files and respond with the compressed binary tar file
 
 ## Non-functional Requirements ##
-*None*
+* Pure Python code only
+* Should be usable on Python 2.7
 
 ## Architecture ##
 At the core of the module there should be an internal abstraction layer responsible for relaying all the RPC messages
