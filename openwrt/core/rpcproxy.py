@@ -93,7 +93,3 @@ class _Method:
                 raise AuthenticationError(self._library.client.hostname)
             else:
                 raise
-
-
-def create(hostname, username, password):
-    return Proxy(hostname, username, password)

@@ -1,5 +1,5 @@
 
-from rpcproxy import AuthenticationError
+from openwrt.core.rpcproxy import AuthenticationError
 from portforwarding import PortForwardingRule
 
 

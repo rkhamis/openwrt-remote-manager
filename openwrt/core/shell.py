@@ -1,8 +1,11 @@
 
-class ShellManager:
+class Shell:
+    """
+    Executor of shell commands on OpenWRT instances via an RPC Proxy
+    """
 
-    def __init__(self, rpc):
-        self._rpc = rpc
+    def __init__(self, rpc_proxy):
+        self._rpc = rpc_proxy
 
     def execute(self, command):
         """

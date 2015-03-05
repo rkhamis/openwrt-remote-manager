@@ -4,8 +4,8 @@ EXIT_SUCCESS = 0
 
 class ServicesManager:
 
-    def __init__(self, shell_manager):
-        self._shell = shell_manager
+    def __init__(self, shell):
+        self._shell = shell
 
     def restart(self, name):
         """
