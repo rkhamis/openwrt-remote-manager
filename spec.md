@@ -14,10 +14,6 @@ It should provide the capability to
 * modify a specific port forwarding rule
 * create a new port forwarding rule
 
-#### System Service Management ####
-It should provide the capability to
-* restart a specific service
-
 #### System User Name and Password Management ####
 It should provide the capability to
 * change the password of a specific user
@@ -25,7 +21,8 @@ It should provide the capability to
 
 #### Network management ####
 It should provide the capability to
-* retrieve the network information associated with all the available network interfaces, or any specific one
+* retrieve the network information associated with all the available network interfaces
+* retrieve the network information associated with a specific available network interface
 * set the network information for a specific network interface
 
 #### Configuration backup ####
