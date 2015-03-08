@@ -8,4 +8,6 @@ from openwrt import PortForwardingRule
     and password 'root' and 'root', and a network information called 'lan'.
 """
 HOSTNAME = '10.0.0.5'
-manager = openwrt.create_manager(HOSTNAME, 'root', 'root')
+AUTH_USERNAME = 'root'
+AUTH_PASSWORD = 'root'
+manager = openwrt.create_manager(HOSTNAME, AUTH_USERNAME, AUTH_PASSWORD)
