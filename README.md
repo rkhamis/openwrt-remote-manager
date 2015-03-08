@@ -31,7 +31,9 @@ Create a manager for a particular OpenWRT installation:
 >>> manager.port_forwarding.add(new_rule)
 ```
 
-### Managing network interfaces ###
+### Managing the network ###
+
+#### Managing the network interfaces ####
 ```python
 >>> network_profiles = manager.network.profiles
 >>> for profile in network_profiles:
@@ -43,6 +45,12 @@ loopback on lo
 >>> manager.network.set_profile(updated_lan_profile)
 >>> # Check out the functionality provided by the NetworkProfile class
 >>> help(updated_lan_profile)
+```
+
+#### Pinging an external host ####
+```python
+>>> manager.network.ping_host('example.org')
+True
 ```
 
 For more information, see `help(openwrt)`.
