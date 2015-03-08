@@ -42,3 +42,6 @@ class NetworkProfile:
     @property
     def mtu(self):
         return self._mtu
+
+    def __str__(self):
+        return '{} on {}'.format(self.name, self.interface_name)
