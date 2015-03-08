@@ -53,4 +53,16 @@ loopback on lo
 True
 ```
 
+### Managing system  users ###
+```python
+>>> manager.users.usernames
+('root', 'daemon', 'network', 'ftp', 'nobody')
+>>> manager.users.create_user('test_user')
+>>> assert 'test_user' in manager.users.usernames
+>>> manager.users.change_password('test_user', 'supersecretpassword')
+>>> assert manager.users.check_password('test_user', 'supersecretpassword')
+>>> assert not manager.users.check_password('test_user', 'anotherpassword')
+>>> manager.users.delete('test_user')
+```
+
 For more information, see `help(openwrt)`.
