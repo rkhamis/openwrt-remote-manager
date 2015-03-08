@@ -1,4 +1,4 @@
-from openwrt import services, users, network
+from openwrt import services, users, network, backup
 from openwrt.core import Shell, RPCProxy
 import portforwarding
 
@@ -20,6 +20,7 @@ class Manager:
         self._portforwarding_manager = portforwarding.PortForwardingManager(self._rpc, self._services)
         self._users = users.UserManager(self._shell, self._rpc)
         self._network = network.NetworkManager(self._rpc, self._services)
+        self._backup = backup.BackupManager(self._shell)
 
     @property
     def port_forwarding(self):
@@ -36,3 +37,7 @@ class Manager:
     @property
     def network(self):
         return self._network
+
+    @property
+    def backup(self):
+        return self._backup
