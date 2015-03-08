@@ -2,8 +2,7 @@
 
 A Python module for remotely managing an OpenWRT instance via its Luci-exported JSONRPC interface.
 
-For more information about the JSONRPC interface, see:
-http://luci.subsignal.org/trac/wiki/Documentation/JsonRpcHowTo
+See [the module specifications](spec.md) for information about the implemented functionality.
 
 ## Usage ##
 
@@ -32,45 +31,6 @@ Create a manager for a particular OpenWRT installation:
 >>> manager.port_forwarding.add(new_rule)
 ```
 
-### Managing system services ###
-```python
-# Example: to restart dnsmasq
->>> manager.services.restart(name='dnsmasq')
-```
-
-### Executing shell commands ###
-```python
->>> manager.shell.call('touch /secret_file')
-0
-# If you're interested in the standard output of the command
->>> manager.shell.execute('ls /')
-"""bin
-dev
-etc
-lib
-lost+found
-mnt
-overlay
-proc
-rom
-root
-sbin
-secret_file
-sys
-tmp
-usr
-var
-www"""
-```
-
-### Doing raw RPC calls ###
-To issue raw RPC calls, use the `rpc` attribute of the manager. Its attributes can be used as exported JSONRPC libraries and their member attributes can be used as exported methods.
-
-The exported RPC libraries and their functions are documented [here](http://luci.subsignal.org/trac/wiki/Documentation/JsonRpcHowTo); don't mind the part about authentication though, as the proxy object does that on-the-fly for you.
-
-```python
-for path in manager.rpc.fs.dir('/etc'):
-    print(path)
-```
+*TODO: Usage of other manager services*
 
 For more information, see `help(openwrt)`.
