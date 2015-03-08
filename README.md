@@ -65,4 +65,11 @@ True
 >>> manager.users.delete('test_user')
 ```
 
+### Doing backups ###
+```python
+>>> import time
+>>> open('config-backup-{}.tar.gz'.format(int(time.time())), mode='wb').write(manager.backup.config_dir())
+# Now there's a config-backup-TIMESTAMP.tar.gz file in your CWD.
+```
+
 For more information, see `help(openwrt)`.
