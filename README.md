@@ -6,6 +6,8 @@ See [the module specifications](spec.md) for information about the implemented f
 
 ## Usage ##
 
+*Note: This module requires that the package `luci-mod-rpc` is installed on all your managed OpenWRT installations.*
+
 Create a manager for a particular OpenWRT installation:
 ```python
 >>> import openwrt
@@ -63,6 +65,13 @@ True
 >>> assert manager.users.check_password('test_user', 'supersecretpassword')
 >>> assert not manager.users.check_password('test_user', 'anotherpassword')
 >>> manager.users.delete('test_user')
+```
+
+### Doing backups ###
+```python
+>>> import time
+>>> open('config-backup-{}.tar.gz'.format(int(time.time())), mode='wb').write(manager.backup.config_dir())
+# Now there's a config-backup-TIMESTAMP.tar.gz file in your CWD.
 ```
 
 For more information, see `help(openwrt)`.
