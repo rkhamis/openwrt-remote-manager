@@ -2,16 +2,20 @@ from openwrt.network import dhcpprofile, staticprofile
 from openwrt.network.profile import NETWORK_PROFILE_PROTOCOL_DHCP, NETWORK_PROFILE_PROTOCOL_STATIC
 
 
-def profile_from_dict(name, values):
+def profile_from_dict(name, config_section):
     """
     Creates and returns a NetworkProfile out of the given profile name and configuration section parameters.
     """
-    if values['proto'] == NETWORK_PROFILE_PROTOCOL_DHCP:
-        return dhcpprofile.from_dict(name, values)
-    elif values['proto'] == NETWORK_PROFILE_PROTOCOL_STATIC:
-        return staticprofile.from_dict(name, values)
+
+    if 'proto' not in config_section:
+        raise ValueError('config_section is not a configuration section of an interface')
+
+    if config_section['proto'] == NETWORK_PROFILE_PROTOCOL_DHCP:
+        return dhcpprofile.from_dict(name, config_section)
+    elif config_section['proto'] == NETWORK_PROFILE_PROTOCOL_STATIC:
+        return staticprofile.from_dict(name, config_section)
     else:
-        raise RuntimeError('Unsupported protocol: {}'.format(values['proto']))
+        raise RuntimeError('Unsupported protocol: {}'.format(config_section['proto']))
 
 
 class NetworkManager:
@@ -32,8 +36,11 @@ class NetworkManager:
         """
         Returns a collection of network profiles as instances of DHCPNetworkProfile and StaticNetworkProfile.
         """
-        return tuple(profile_from_dict(name, values) for (name, values) in
-                     self._rpc.uci.get_all('network').items())
+        return tuple(
+            profile_from_dict(profile_name, config_section)
+            for (profile_name, config_section) in self._rpc.uci.get_all('network').items()
+            if config_section['.type'] == 'interface'
+        )
 
     def delete_profile(self, network_profile):
         self._rpc.uci.delete('network', network_profile.name)
