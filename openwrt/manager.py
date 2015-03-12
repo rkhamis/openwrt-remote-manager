@@ -1,6 +1,5 @@
-from openwrt import services, users, network, backup
-from openwrt.core import Shell, RPCProxy
-import portforwarding
+from . import services, users, network, backup, portforwarding
+from .core import Shell, RPCProxy
 
 
 class Manager:

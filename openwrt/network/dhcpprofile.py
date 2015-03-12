@@ -1,4 +1,4 @@
-from openwrt.network.profile import NETWORK_PROFILE_PROTOCOL_DHCP, NetworkProfile
+from .profile import NETWORK_PROFILE_PROTOCOL_DHCP, NetworkProfile
 
 
 class DHCPNetworkProfile(NetworkProfile):

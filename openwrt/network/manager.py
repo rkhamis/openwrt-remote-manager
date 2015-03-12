@@ -1,5 +1,5 @@
-from openwrt.network import dhcpprofile, staticprofile
-from openwrt.network.profile import NETWORK_PROFILE_PROTOCOL_DHCP, NETWORK_PROFILE_PROTOCOL_STATIC
+from . import dhcpprofile, staticprofile
+from .profile import NETWORK_PROFILE_PROTOCOL_DHCP, NETWORK_PROFILE_PROTOCOL_STATIC
 
 
 def profile_from_dict(name, config_section):

@@ -1,5 +1,5 @@
 
-import util
+from . import util
 
 NETWORK_PROFILE_PROTOCOL_DHCP = 'dhcp'
 NETWORK_PROFILE_PROTOCOL_STATIC = 'static'

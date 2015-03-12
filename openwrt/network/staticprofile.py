@@ -1,4 +1,4 @@
-from openwrt.network.profile import NetworkProfile, NETWORK_PROFILE_PROTOCOL_STATIC
+from .profile import NetworkProfile, NETWORK_PROFILE_PROTOCOL_STATIC
 
 
 class StaticNetworkProfile(NetworkProfile):

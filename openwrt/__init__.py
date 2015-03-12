@@ -1,7 +1,7 @@
 
-from openwrt.core.rpcproxy import AuthenticationError
-from portforwarding import PortForwardingRule
-from network import StaticNetworkProfile, DHCPNetworkProfile
+from .core.rpcproxy import AuthenticationError
+from .portforwarding import PortForwardingRule
+from .network import StaticNetworkProfile, DHCPNetworkProfile
 
 
 def create_manager(hostname, username, password):

@@ -1,7 +1,7 @@
 
-from manager import NetworkManager
-from dhcpprofile import DHCPNetworkProfile
-from staticprofile import StaticNetworkProfile
+from .manager import NetworkManager
+from .dhcpprofile import DHCPNetworkProfile
+from .staticprofile import StaticNetworkProfile
 
 __all__ = [
     'NetworkManager',
