@@ -1,5 +1,5 @@
 from urllib2 import HTTPError
-from pyjsonrpc import HttpClient
+from jsonrpc_requests import Server
 
 
 class Proxy:
@@ -31,7 +31,7 @@ class Proxy:
         Authenticates this proxy and mutates its internal state according to the authentication result.
         """
         if not self._auth_token:
-            self._auth_token = HttpClient(url=self.http_url('auth')).login(self._auth_username, self._auth_password)
+            self._auth_token = _json_rpc_call(self.http_url('auth'), 'login', self._auth_username, self._auth_password)
 
     def __getattr__(self, library_name):
         return _LibraryOrMethod(self, library_name)
@@ -64,10 +64,13 @@ class _LibraryOrMethod:
         name_components = self._name.split('.')
         library, method = name_components[0], '.'.join(name_components[1:])
         try:
-            return HttpClient(url=self._proxy.http_url(library)).call(method, *args, **kwargs)
+            return _json_rpc_call(self._proxy.http_url(library), method, *args, **kwargs)
         except HTTPError as e:
             if e.code == 403:
                 raise AuthenticationError(self.client.hostname)
             else:
                 raise
 
+
+def _json_rpc_call(url, method, *args, **kwargs):
+    return getattr(Server(url), method).__call__(*args, **kwargs)
