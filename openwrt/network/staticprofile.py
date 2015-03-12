@@ -2,12 +2,26 @@ from .profile import NetworkProfile, NETWORK_PROFILE_PROTOCOL_STATIC
 
 
 class StaticNetworkProfile(NetworkProfile):
+    """
+    A NetworkProfile for a static network interface.
+
+    Args:
+        name (str): the name of the network profile
+        interface_name (str): the name of the network interface to use
+        ip4_address (str): the IPv4 address in dotted format
+        ip6_address (str): the IPv6 address
+        net_mask (str): the network mask
+        ip4_gateway (str): the IPv4 address of the gateway
+        ip6_gateway (str): the IPv6 address of the gateway
+        dns (sequence of str): a sequence of DNS server addresses
+        mtu (int): MTU
+    """
 
     def __init__(self,
                  name,
                  interface_name,
                  ip4_address,
-                 ip6_address,
+                 ip6_address=None,
                  net_mask=None,
                  ip4_gateway=None,
                  ip6_gateway=None,
