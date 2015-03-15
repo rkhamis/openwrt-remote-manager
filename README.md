@@ -1,3 +1,5 @@
+[![Latest Version](https://pypip.in/version/openwrt-remote-manager/badge.svg?text=pypi&style=flat)](https://pypi.python.org/pypi/openwrt-remote-manager/)
+
 # OpenWRT Remote Manager #
 
 A Python module for remotely managing an OpenWRT instance via its Luci-exported JSONRPC interface.
