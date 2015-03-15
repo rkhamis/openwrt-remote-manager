@@ -10,7 +10,7 @@ class UserManager:
         self._rpc_proxy = rpc_proxy
 
     @property
-    def usernames(self):
+    def user_names(self):
         """
         Returns a collection of user names
         """

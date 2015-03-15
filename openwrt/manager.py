@@ -6,6 +6,9 @@ class Manager:
     """
     A manager of a remote OpenWRT instance that provides more sophisticated management functionality that is not
     provided by the RPC interface directly.
+
+    The functionality provided by this manager is delegated to several sub-managers available as attributes
+    of this instance.
     """
 
     def __init__(self, hostname, username, password):
@@ -23,20 +26,35 @@ class Manager:
 
     @property
     def port_forwarding(self):
+        """
+        Returns the manager of port forwarding rules.
+        """
         return self._portforwarding_manager
 
     @property
     def services(self):
+        """
+        Returns the manager of running services.
+        """
         return self._services
 
     @property
     def users(self):
+        """
+        Returns the manager of system users.
+        """
         return self._users
 
     @property
     def network(self):
+        """
+        Returns the manager of network profiles.
+        """
         return self._network
 
     @property
     def backup(self):
+        """
+        Returns the manager of backup operations.
+        """
         return self._backup
