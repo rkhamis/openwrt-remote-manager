@@ -50,7 +50,7 @@ class DHCPManager:
         dnsmasq = {'leasefile': '/tmp/dhcp.leases'}
         dhcpconfig = self._rpc_proxy.uci.get_all('dhcp')
         for dhcp in dhcpconfig.values():
-            if not dhcp.get('type') == 'dnsmasq':
+            if not dhcp.get('.type') == 'dnsmasq':
                 continue
             for key, value in dhcp.iteritems():
                 dnsmasq[key] = value
@@ -66,7 +66,7 @@ class DHCPManager:
         dhcpleases = self._shell.execute("cat %s" % path).splitlines()
         leases = list()
         for lease in dhcpleases:
-            timestamp, ip4_address, mac_address=lease.split()[:3]
+            timestamp, mac_address, ip4_address=lease.split()[:3]
             leases.append({'timestamp': timestamp, 'ip4_address': ip4_address, 'mac_address': mac_address})
         result = tuple(DHCPLease.from_dict(lease) for lease in leases)
         return result
