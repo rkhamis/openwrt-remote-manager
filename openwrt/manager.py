@@ -1,4 +1,4 @@
-from . import services, users, network, backup, portforwarding
+from . import services, users, network, backup, portforwarding, dhcp
 from .core import Shell, RPCProxy
 
 
@@ -23,6 +23,7 @@ class Manager:
         self._users = users.UserManager(self._shell, self._rpc)
         self._network = network.NetworkManager(self._rpc, self._services)
         self._backup = backup.BackupManager(self._shell)
+        self._dhcp = dhcp.DHCPManager(self._shell, self._rpc)
 
     @property
     def port_forwarding(self):
@@ -58,3 +59,10 @@ class Manager:
         Returns the manager of backup operations.
         """
         return self._backup
+
+    @property
+    def dhcp(self):
+        """
+        Returns the manager of DHCP operations.
+        """
+        return self._dhcp
